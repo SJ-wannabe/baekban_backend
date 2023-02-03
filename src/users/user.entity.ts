@@ -1,16 +1,16 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 
 @Entity()
 @Unique(['userid', 'email'])
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class UserEntity extends BaseEntity {
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   userid: string;
 
   @Column()
-  username: string;
+  name: string;
 
   @Column()
   password: string;
@@ -23,4 +23,7 @@ export class User extends BaseEntity {
 
   @Column()
   businessRegistrationNumber: number;
+
+  @Column({ length: 60 })
+  signupVerifyToken: string;
 }
