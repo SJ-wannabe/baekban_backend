@@ -13,6 +13,9 @@ export class UserEntity extends BaseEntity {
   name: string;
 
   @Column()
+  birth: string;
+
+  @Column()
   password: string;
 
   @Column()
@@ -23,7 +26,4 @@ export class UserEntity extends BaseEntity {
 
   @Column()
   businessRegistrationNumber: number;
-
-  @Column({ length: 60 })
-  signupVerifyToken: string;
 }
