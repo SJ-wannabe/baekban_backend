@@ -6,15 +6,15 @@ import * as uuid from 'uuid';
 import { ulid } from 'ulid';
 import { CreateUserDto } from './dto/createUser.dto';
 import * as bcrypt from 'bcryptjs';
-import { AuthService } from 'src/auth/auth.service';
 import { LoginDto } from './dto/login.dto';
+import {JwtService} from "@nestjs/jwt";
 
 
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
-    private authService: AuthService,
+    private jwtService: JwtService,
   ) {}
 
   async createUser(dto: CreateUserDto) {
@@ -35,15 +35,20 @@ export class UsersService {
     await this.saveUser(userid, hashedPassword, name, birth, email, phoneNumber, businessRegistrationNumber);
   }
 
-  async login(dto: LoginDto): Promise<string> {
+  async login(dto: LoginDto): Promise<{accessToken: string}> {
     const { userid, password } = dto;
     const user = await this.usersRepository.findOneBy({ userid });
 
     if (user && await bcrypt.compare(password, user.password)) {
-      return '로그인 성공';
+      // 유저 토큰 생성 ( Secret + Payload )
+      const payload = { userid };
+      const accessToken = await this.jwtService.sign(payload);
+
+      return {accessToken};
     } else {
       throw new UnauthorizedException('로그인 실패');
     }
+
   }
 
 

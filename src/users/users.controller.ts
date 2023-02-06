@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { LoginDto } from './dto/login.dto';
 
+
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) {}
@@ -13,7 +14,7 @@ export class UsersController {
     }
 
     @Post('/login')
-    async login(@Body() dto: LoginDto): Promise<string> {
+    async login(@Body() dto: LoginDto): Promise<{accessToken: string}> {
         return await this.usersService.login(dto);
     }
 }
