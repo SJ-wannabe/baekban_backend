@@ -19,7 +19,4 @@ export class CreateUserDto {
 
     @ApiProperty({ description: '휴대폰번호' })
     readonly phoneNumber: string;
-
-    @ApiProperty({ description: '사업자등록번ㅁ' })
-    readonly businessRegistrationNumber: string;
 }

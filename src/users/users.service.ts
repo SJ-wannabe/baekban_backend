@@ -17,7 +17,7 @@ export class UsersService {
   ) {}
 
   async createUser(dto: CreateUserDto) {
-    const { userid, password, name, birth, email, phoneNumber, businessRegistrationNumber } = dto;
+    const { userid, password, name, birth, email, phoneNumber } = dto;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -31,7 +31,7 @@ export class UsersService {
     }
 
     // const signupVerifyToken = uuid.v1();
-    await this.saveUser(userid, hashedPassword, name, birth, email, phoneNumber, businessRegistrationNumber);
+    await this.saveUser(userid, hashedPassword, name, birth, email, phoneNumber);
   }
 
   async login(dto: LoginDto): Promise<string> {
@@ -57,7 +57,6 @@ export class UsersService {
       birth: Date,
       email: string,
       phoneNumber: string,
-      businessRegistrationNumber: string,
   ) {
     const user = new UserEntity();
     user.id = ulid();
@@ -67,7 +66,6 @@ export class UsersService {
     user.birth = birth;
     user.email = email;
     user.phoneNumber = phoneNumber;
-    user.businessRegistrationNumber = businessRegistrationNumber;
     await this.usersRepository.save(user);
   }
 }

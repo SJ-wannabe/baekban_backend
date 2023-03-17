@@ -40,10 +40,6 @@ export class UserEntity extends BaseEntity {
   @ApiProperty({ description: '휴대폰번호' })
   phoneNumber: string;
 
-  @Column()
-  @ApiProperty({ description: '사업자등록번호' })
-  businessRegistrationNumber: string;
-
   @CreateDateColumn({ name: 'created_at'})
   @ApiProperty({ description: '생성 시간' })
   createdAt: Date;
