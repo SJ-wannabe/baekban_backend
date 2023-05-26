@@ -11,10 +11,10 @@ export class StoresService {
 
 
   async createStore(createStoreDto: CreateStoreDto) {
-    const { name } = createStoreDto;
+    const { businessRegistrationNumber } = createStoreDto;
 
     const store = new StoreEntity();
-    store.name = name;
+    store.businessRegistrationNumber = businessRegistrationNumber;
     await store.save();
 
     return this.storeRepository.save(store);

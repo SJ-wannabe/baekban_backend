@@ -45,6 +45,6 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  @ApiProperty({ description: '생성 시간' })
+  @ApiProperty({ description: '수정 시간' })
   updatedAt: Date;
 }
