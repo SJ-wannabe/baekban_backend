@@ -2,7 +2,6 @@ import {UnauthorizedException, UnprocessableEntityException} from '@nestjs/commo
 import {InjectRepository} from '@nestjs/typeorm';
 import {UserEntity} from './user.entity';
 import {Repository} from 'typeorm';
-import {ulid} from 'ulid';
 import {CreateUserDto} from './dto/createUser.dto';
 import * as bcrypt from 'bcryptjs';
 import {LoginDto} from './dto/login.dto';
@@ -35,12 +34,12 @@ export class UsersService {
   }
 
   async login(dto: LoginDto): Promise<string> {
-    const { userid, password } = dto;
-    const user = await this.usersRepository.findOneBy({ userid });
+    const { id, password } = dto;
+    const user = await this.usersRepository.findOneBy({ id });
 
     if (user && await bcrypt.compare(password, user.password)) {
       // 유저 토큰 생성 ( Secret + Payload )
-      const payload = { userid };
+      const payload = { id };
 
       return this.jwtService.sign(payload);
     } else {
@@ -59,8 +58,7 @@ export class UsersService {
       phoneNumber: string,
   ) {
     const user = new UserEntity();
-    user.id = ulid();
-    user.userid = userid;
+    user.id = userid;
     user.password = password;
     user.name = name;
     user.birth = birth;
